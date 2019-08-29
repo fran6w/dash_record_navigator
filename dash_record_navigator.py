@@ -23,7 +23,7 @@ See: [https://github.com/plotly/dash](https://github.com/plotly/dash)
 - `ascending`: bool, default value: True
 	- True: records are first to last
 	- False: records are last to first
-- `titles`: tuple with 4 tiptools for each button, default value: `('first', 'previous', 'next', 'last')`, reverse if ascending is False
+- `titles`: tuple with 4 tooltips for each button, default value: `('first', 'previous', 'next', 'last')`, reverse if ascending is False
 
 ## Class attributes
 Integers representing which button has been clicked:
