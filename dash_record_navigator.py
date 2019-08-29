@@ -56,7 +56,7 @@ Dash id for each button:
 
 - `get_bounds(btn, current_state, record_count, limit=None)`
 	- arguments:
-		- *btn*: integer corresponding to which button has been clicked, see *get_bounds()* method
+		- *btn*: integer corresponding to which button has been clicked, see *which_button()* method
 		- *current_state*: variable or tuple of variables that are used to select the displayed records. If the current_state differs from the stored one, FIRST is used
 		- *record_count*: number of records or callable which returns the number of records. Use integer if it is immediate to compute (e.g., DataFrame: len(df.loc[...]). Use zero argument lambda if computation requires some time (e.g., SQL: `SELECT COUNT(*) FROM (...);`) since it is only used when *btn* is *LAST*.
 		- *limit*: keyword argument which overwrites the instance variable *_limit*
