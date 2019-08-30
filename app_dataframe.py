@@ -53,10 +53,7 @@ app.layout = html.Div(
     Output('table-names', 'children'),
     [Input('search-name', 'value'),
      Input('check-gender', 'value'),
-     Input(record_nav.fast_backward_id, 'n_clicks_timestamp'),
-     Input(record_nav.step_backward_id, 'n_clicks_timestamp'),
-     Input(record_nav.step_forward_id, 'n_clicks_timestamp'),
-     Input(record_nav.fast_forward_id, 'n_clicks_timestamp')])
+     *record_nav.inputs()])
 def display_records_from_df(search_name, check_gender, fast_backward_ts, step_backward_ts, step_forward_ts, fast_forward_ts):
     btn = record_nav.which_button(fast_backward_ts, step_backward_ts, step_forward_ts, fast_forward_ts)
     rows = select_in_df(search_name, check_gender, btn)
