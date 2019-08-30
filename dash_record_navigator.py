@@ -97,7 +97,7 @@ For the Python code: same as plotly/dash (MIT).
         children = [
                     html.A(html.I(className=f"fa fa-{btn}"),
                            id=self._btn_id(btn),
-                           n_clicks_timestamp=0,
+                           n_clicks_timestamp=ts,
                            title=title,
                            style={'margin-right': '20px',
                                   'text-decoration': 'none'})
