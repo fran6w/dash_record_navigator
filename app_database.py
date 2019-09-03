@@ -104,7 +104,7 @@ def display_records_from_db(search_name, check_gender, fast_backward_ts, step_ba
     return result
 
 def select_in_db(search_name, check_gender, btn):
-    sql = '''SELECT name, gender, births FROM names WHERE (name like '%{}') AND (gender IN ('{}'))'''.format(search_name, "','".join(check_gender))
+    sql = '''SELECT name, gender, births FROM names WHERE (name like '%{}%') AND (gender IN ('{}'))'''.format(search_name, "','".join(check_gender))
     sql_count = '''SELECT COUNT(*) FROM ({});'''.format(sql)
     
 
