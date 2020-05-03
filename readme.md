@@ -44,7 +44,7 @@ See: [https://github.com/plotly/dash](https://github.com/plotly/dash)
         - `current_state`: variable or tuple of variables that are used to select the displayed records;
         if the current state differs from the stored one, FIRST is used
         - `record_count`: number of records or callable which returns the number of records:
-        use integer if it is immediate to compute (e.g., DataFrame: len(df.loc[...]);
+        use integer if it is immediate to compute (e.g., DataFrame: `len(df.loc[...])`;
         use zero argument lambda if computation requires some time
         (e.g., SQL: `SELECT COUNT(*) FROM (...);`)
         - `limit`: keyword argument which overwrites the instance variable `_limit`
