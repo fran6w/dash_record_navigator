@@ -34,17 +34,20 @@ See: [https://github.com/plotly/dash](https://github.com/plotly/dash)
 
 ## 2. Methods
 
-- `html()`
+- `html(color)`
     - generates 4 buttons as part of Dash layout
     - to be used in Dash layout definition
+    - keyword arguments:
+        - `color`: HTML color for buttons
 
 - `inputs()`
     - generates 4 input statements for each button
     - to be used in Dash callback definition
 
-- `which_button(fast_backward_ts, step_backward_ts, step_forward_ts, fast_forward_ts)`
+- `which_button(fast_backward_ts, step_backward_ts, step_forward_ts, fast_forward_ts, extra_ts)`
     - arguments: `n_clicks_timestamp` of each 4 buttons
-    - returns the integer corresponding to which button has been clicked last
+    - extra_ts: `n_clicks_timestamp` of some other button
+    - returns the integer corresponding to which button has been clicked last, or None if other button
     - to be used in Dash callbacks
 
 - `get_bounds(btn, current_state, record_count, limit=None)`
@@ -114,11 +117,12 @@ For the Python code: same as plotly/dash (MIT).
         inputs = [Input(self._btn_id(btn), 'n_clicks_timestamp') for btn in self.FA_BUTTONS]
         return inputs
 
-    def which_button(self, fast_backward_ts, step_backward_ts, step_forward_ts, fast_forward_ts):
+    def which_button(self, fast_backward_ts, step_backward_ts, step_forward_ts, fast_forward_ts, extra_ts=-1):
         btn_list = [(fast_backward_ts, self.FIRST),
                     (step_backward_ts, self.PREVIOUS),
                     (step_forward_ts, self.NEXT),
-                    (fast_forward_ts, self.LAST)]
+                    (fast_forward_ts, self.LAST),
+                    (extra_ts, None)]
         _, btn = max(btn_list, key=lambda x: int(x[0]))
 
         return btn

@@ -25,16 +25,18 @@ See: [https://github.com/plotly/dash](https://github.com/plotly/dash)
 
 ## 2. Methods
 
-- `html(color)`
-    - optional argument color, default deepskyblue
+- html(color)`
     - generates 4 buttons as part of Dash layout
-- to be used in Dash layout definition
-    
+    - to be used in Dash layout definition
+    - keyword arguments:
+        - `color`: HTML color for buttons
 - `inputs()`
-	- generates 4 input statements for each button
-	- to be used in Dash callback definition
-- `which_button(fast_backward_ts, step_backward_ts, step_forward_ts, fast_forward_ts)`
+  - generates 4 input statements for each button
+  - to be used in Dash callback definition
+  
+- `which_button(fast_backward_ts, step_backward_ts, step_forward_ts, fast_forward_ts, extra_ts=-1)`
     - arguments: `n_clicks_timestamp` of each 4 buttons
+    - keyword argument extra_ts: `n_clicks_timestamp` of some other button
     - returns the integer corresponding to which button has been clicked last
     - to be used in Dash callbacks
 - `get_bounds(btn, current_state, record_count, limit=None)`
