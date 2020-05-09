@@ -30,23 +30,19 @@ See: [https://github.com/plotly/dash](https://github.com/plotly/dash)
     - to be used in Dash layout definition
     - keyword arguments:
         - `color`: HTML color for buttons
-- `inputs()`
-  - generates 4 input statements for each button
-  - to be used in Dash callback definition
-  
 - `which_button(fast_backward_ts, step_backward_ts, step_forward_ts, fast_forward_ts, extra_ts=-1)`
     - arguments: `n_clicks_timestamp` of each 4 buttons
     - keyword argument extra_ts: `n_clicks_timestamp` of some other button
-    - returns the integer corresponding to which button has been clicked last
-    - to be used in Dash callbacks
+    - returns the integer corresponding to which button has been clicked last or `None` if extra button
+    - to be used in Dash callbacks with `Input({'index': ALL, 'role': ALL, 'name': <name of RecordNavigator instance>}, 'n_clicks_timestamp')`
 - `get_bounds(btn, current_state, record_count, limit=None)`
     - arguments:
         - `btn`: integer corresponding to which button has been clicked, see *which_button()* method
         - `current_state`: variable or tuple of variables that are used to select the displayed records;
         if the current state differs from the stored one, FIRST is used
         - `record_count`: number of records or callable which returns the number of records:
-        use integer if it is immediate to compute (e.g., DataFrame: `len(df.loc[...])`;
-        use zero argument lambda if computation requires some time
+        use an integer if it is immediate to compute (e.g., DataFrame: `len(df.loc[...])`;
+        use a zero argument lambda if computation requires some time
         (e.g., SQL: `SELECT COUNT(*) FROM (...);`)
         - `limit`: keyword argument which overwrites the instance variable `_limit`
     - returns a tuple `(limit, offset)` which is used to select which records should be displayed

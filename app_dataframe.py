@@ -10,7 +10,7 @@ import pandas as pd
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, ALL
 
 from dash_record_navigator import RecordNavigator
 
@@ -45,7 +45,7 @@ app.layout = html.Div(
                               style={'margin-top': '20px'}
                         ),
                 html.Div(id='table-names'),
-                record_nav.html()
+                record_nav.html(),
             ],
             style={'margin-left': '10px'})
 
@@ -53,9 +53,9 @@ app.layout = html.Div(
     Output('table-names', 'children'),
     [Input('search-name', 'value'),
      Input('check-gender', 'value'),
-     *record_nav.inputs()])
-def display_records_from_df(search_name, check_gender, fast_backward_ts, step_backward_ts, step_forward_ts, fast_forward_ts):
-    btn = record_nav.which_button(fast_backward_ts, step_backward_ts, step_forward_ts, fast_forward_ts)
+     Input({'index': ALL, 'role': ALL, 'name': 'names'}, 'n_clicks_timestamp')])
+def display_records_from_df(search_name, check_gender, all_ts):
+    btn = record_nav.which_button(*all_ts)
     rows = select_in_df(search_name, check_gender, btn)
 
     trs = [

@@ -40,15 +40,11 @@ See: [https://github.com/plotly/dash](https://github.com/plotly/dash)
     - keyword arguments:
         - `color`: HTML color for buttons
 
-- `inputs()`
-    - generates 4 input statements for each button
-    - to be used in Dash callback definition
-
 - `which_button(fast_backward_ts, step_backward_ts, step_forward_ts, fast_forward_ts, extra_ts)`
     - arguments: `n_clicks_timestamp` of each 4 buttons
     - extra_ts: `n_clicks_timestamp` of some other button
     - returns the integer corresponding to which button has been clicked last, or None if other button
-    - to be used in Dash callbacks
+    - to be used in Dash callbacks with Input({'index': ALL, 'role': ALL, 'name': 'names'}, 'n_clicks_timestamp')
 
 - `get_bounds(btn, current_state, record_count, limit=None)`
     - arguments:
@@ -71,16 +67,14 @@ See: [https://github.com/plotly/dash](https://github.com/plotly/dash)
 See examples in `app_dataframe.py` and `app_database.py` files
 
 ## Version
-0.1.1
+0.1.2
 
 ## License
 For the Python code: same as plotly/dash (MIT).
     """
 
-    FIRST = 0
-    PREVIOUS = 1
-    NEXT = 2
-    LAST = 3
+    ALL = range(4)
+    FIRST, PREVIOUS, NEXT, LAST = ALL
     TITLES = ('first', 'previous', 'next', 'last')
     # Font Awesome buttons
     FA_BUTTONS = ('fast-backward', 'step-backward', 'step-forward', 'fast-forward')
@@ -89,10 +83,6 @@ For the Python code: same as plotly/dash (MIT).
 
     def __init__(self, name, limit=10, ascending=True, titles=None):
         self._name = name
-        self.fast_backward_id = f'btn-fast-backward-{self._name}'
-        self.step_backward_id = f'btn-step-backward-{self._name}'
-        self.step_forward_id = f'btn-step-forward-{self._name}'
-        self.fast_forward_id = f'btn-fast-forward-{self._name}'
 
         self._limit = limit
         self._offset = 0
@@ -102,20 +92,16 @@ For the Python code: same as plotly/dash (MIT).
     def html(self, color='#00BFFF'):
         children = [
                     html.A(html.I(className=f"fa fa-{btn}"),
-                           id=self._btn_id(btn),
+                           id=self._btn_id(i, btn),
                            n_clicks_timestamp=ts,
                            title=title,
                            style={'margin-right': '20px',
                                   'text-decoration': 'none',
                                   'color': color})
-                    for (btn, ts, title) in zip(self.FA_BUTTONS, self.TIMESTAMPS, self._titles)]
+                    for (i, btn, ts, title) in zip(self.ALL, self.FA_BUTTONS, self.TIMESTAMPS, self._titles)]
         div = html.Div(children,
                        style={'margin-top': '5px'})
         return div
-
-    def inputs(self):
-        inputs = [Input(self._btn_id(btn), 'n_clicks_timestamp') for btn in self.FA_BUTTONS]
-        return inputs
 
     def which_button(self, fast_backward_ts, step_backward_ts, step_forward_ts, fast_forward_ts, extra_ts=-1):
         btn_list = [(fast_backward_ts, self.FIRST),
@@ -150,5 +136,5 @@ For the Python code: same as plotly/dash (MIT).
 
         return limit, self._offset
 
-    def _btn_id(self, btn):
-        return f'btn-{btn}-{self._name}'
+    def _btn_id(self, i, btn):
+        return {'index': i, 'role': btn, 'name': self._name}
